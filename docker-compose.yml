@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: corbis
+      POSTGRES_DB: corbis
+      POSTGRES_PASSWORD: corbis1234
+    volumes:
+      - pgdata:/var/lib/posgresql/data
+  corbis:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./corbis:/corbis
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+volumes:
+  pgdata:
