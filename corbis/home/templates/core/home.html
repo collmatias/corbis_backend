@@ -12,6 +12,14 @@
     <div class="row">
         <div class="clo-md-1 offset-md-1">
 
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} mt-5" role="alert">
+                <strong>{{ message }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
             <table class="table">
                 <thead>
                     <tr>
@@ -25,6 +33,26 @@
                 </thead>
             <tbody>
                 {% for producto in product_list %}
+
+                        <!-- Modal -->
+                        <!--div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Desea eliminar el producto?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{producto.nombre}}
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Eliminar</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div-->
+
                     <tr>
                         <!--th scope="row"><a href="{% url 'product_details' producto.nombre %}">Editar</th-->
                         <th>
@@ -41,6 +69,10 @@
                             <form action="{% url 'product_delete' producto.nombre %}" method="POST">
                                 {% csrf_token %}
                                 <button class="btn btn-sm btn-primary float-start">Eliminar</button>
+                                <!-- Button trigger modal -->
+                                <!--button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Eliminar
+                                </button-->
                           </form>
                         </td>
                         <!--th scope="row"><a href="{% url 'product_delete' producto.nombre %}">Eliminar</th>-->
@@ -50,6 +82,10 @@
             </table>
         </div>
     </div>
+
+
+
+
 </main>
 
 

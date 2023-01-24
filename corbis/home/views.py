@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 from django.urls import reverse
 
 
@@ -14,6 +15,8 @@ from .tables import ProductoTable, ProductoTableView
 from django_tables2 import SingleTableView
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
+
+
 
 # Create your views here.
 
@@ -42,9 +45,11 @@ def create_product(request):
 
             if product_creation_form.is_valid():
                 product_creation_form.save()
-                return redirect(reverse('create_product')+'?ok')
+                messages.add_message(request=request, level=messages.SUCCESS, message='Producto creado correctamente')
+                return redirect(reverse('home'))
             else:
-                return redirect(reverse('create_product')+'?error')
+                messages.add_message(request=request, level=messages.WARNING, message='Error al crear Producto')
+                return redirect(reverse('home'))
 
         return render(request, 'core/create_product.html', {'form':product_creation_form})
 
@@ -68,9 +73,11 @@ def product_details(request, buscar_producto):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse('create_product')+'?ok')
+            messages.add_message(request=request, level=messages.SUCCESS, message='Producto actualizado correctamente')
+            return redirect(reverse('home'))
         else:
-            return redirect(reverse('create_product')+'?error')
+            messages.add_message(request=request, level=messages.WARNING, message='Error al editar Producto')
+            return redirect(reverse('home'))
 
 
 @login_required
@@ -78,22 +85,9 @@ def product_delete(request, buscar_producto):
     prod = get_object_or_404(Producto, nombre=buscar_producto)
     if request.method == 'POST':
         prod.delete()
+        messages.add_message(request=request, level=messages.SUCCESS, message='Producto eliminado correctamente')
         return redirect('home')
     
-    """prod = get_object_or_404(Producto, nombre=buscar_producto)
-
-    if request.method == 'POST':
-        form = ProductoCreationForm(instance=prod)
-        return render(request, 'core/product_detail.html', { 'producto' : prod, 'form' : form })
-
-    else:
-        form = ProductoCreationForm(request.POST, instance=prod)
-
-        if form.is_valid():
-            prod.delete()
-            return redirect(reverse('create_product')+'?ok')
-        else:
-            return redirect(reverse('create_product')+'?error')"""
 
 
 def table_view(request):

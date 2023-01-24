@@ -18,11 +18,6 @@
                 <h5 class="card-title">Complete todos los campos</h5>
                 {{ form | crispy }}
 
-                <form action="{% url 'product_delete' producto.nombre %}" method="POST">
-                  {% csrf_token %}
-                    <button class="btn btn-sm btn-primary float-start">Eliminar Producto</button>
-                </form>
-
                 <input class="btn btn-sm btn-primary float-end" type="submit" value="Actualizar Producto" {% if 'ok' in request.GET %}disabled{% endif %}
                 {% if 'error' in request.GET %}disabled{% endif %}>
 
