@@ -58,7 +58,7 @@
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         
-                                            <form action="{% url 'product_delete' producto.nombre %}" method="POST">
+                                            <form action="{% url 'product_delete' producto.codigo %}" method="POST">
                                             {% csrf_token %}
                                                 <button class="btn btn-primary">Eliminar</button>
                                             </form>

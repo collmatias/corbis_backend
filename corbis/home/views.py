@@ -76,7 +76,7 @@ def product_details(request, buscar_producto):
 
 @login_required
 def product_delete(request, buscar_producto):
-    prod = get_object_or_404(Producto, nombre=buscar_producto)
+    prod = get_object_or_404(Producto, codigo=buscar_producto)
     if request.method == 'POST':
         prod.delete()
         messages.add_message(request=request, level=messages.SUCCESS, message='Producto eliminado correctamente')
