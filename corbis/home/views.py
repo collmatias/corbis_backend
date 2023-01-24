@@ -1,17 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse
-
+from django.db.models import Q # new
 
 from .models import Tipos_productos, Producto
 from .forms import ProductoCreationForm
 from .tables import ProductoTable, ProductoTableView
 
 
-#from django.views.generic import ListView
+from django.views.generic import ListView
 from django_tables2 import SingleTableView
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
@@ -20,15 +22,28 @@ from django_tables2.export.export import TableExport
 
 # Create your views here.
 
+
+
+
 class ProductoListView(SingleTableView):
     model = Producto
     table_class = ProductoTable
     template_name = 'core/products.html'
 
-# Create your views here.
-@login_required
-def home(request):
-    return render(request, 'core/home.html')
+class SearchResultsView(ListView):
+    model = Producto
+    template_name = "core/home.html"
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get("q")
+
+        if not query:
+            query = ''
+
+        object_list = Producto.objects.filter(
+            Q(nombre__icontains=query) | Q(codigo__icontains=query)
+        )
+        return object_list
 
 @login_required
 def create_product(request):

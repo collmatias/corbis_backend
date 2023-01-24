@@ -2,93 +2,111 @@
 {% load static %}
 {% block content %}
 
-<h3>Administrador de Stock</h3>
-{% if request.user.is_authenticated %}
-    <hr>
 
-<main class="container">
-    <div class="row">
-        <div class="clo-md-1 offset-md-1">
+  <h3>Administrador de Stock</h3>
+  {% if request.user.is_authenticated %}
+      <hr>
 
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{message.tags}} mt-5" role="alert">
-                        <strong>{{ message }}</strong>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Codigo</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-            <tbody>
-                {% for producto in product_list %}
-                    <tr>
-                        <!--th scope="row"><a href="{% url 'product_details' producto.nombre %}">Editar</th-->
-                        <th>
-                            <form action="{% url 'product_details' producto.nombre %}" method="GET">
-                                {% csrf_token %}
-                                <button class="btn btn-sm btn-primary float-start">Editar</button>
-                          </form>
-                        </th>
-                        <td>{{producto.codigo}}</td>>
-                        <td>{{producto.nombre}}</td>
-                        <td>{{producto.precio}}</td>
-                        <td>{{producto.cantidad}}</td>
-                        <th>
-                                <!-- Modal -->
-                                <div class="modal fade" id="{{producto.codigo}}" tabindex="-1" aria-labelledby="{{producto.codigo}}Label" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="{{producto.codigo}}Label">Desea eliminar el producto?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <form action="{% url 'home' %}" method="get">
+        <input name="q" type="text" placeholder="Search...">
+      </form>
+    
+        
+        <main class="container">
+            <div class="row">
+                <div class="clo-md-1 offset-md-1">
+        
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{message.tags}} mt-5" role="alert">
+                                <strong>{{ message }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        {% for producto in object_list %}
+                            <tr>
+                                <!--th scope="row"><a href="{% url 'product_details' producto.nombre %}">Editar</th-->
+                                <th>
+                                    <form action="{% url 'product_details' producto.nombre %}" method="GET">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-primary float-start">Editar</button>
+                                    </form>
+                                </th>
+                                <td>{{producto.codigo}}</td>>
+                                <td>{{producto.nombre}}</td>
+                                <td>{{producto.precio}}</td>
+                                <td>{{producto.cantidad}}</td>
+                                <th>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="{{producto.codigo}}" tabindex="-1" aria-labelledby="{{producto.codigo}}Label" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h5 class="modal-title" id="{{producto.codigo}}Label">Desea eliminar el producto?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{producto.nombre}}
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                
+                                                    <form action="{% url 'product_delete' producto.codigo %}" method="POST">
+                                                    {% csrf_token %}
+                                                        <button class="btn btn-primary">Eliminar</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            </div>  
                                         </div>
-                                        <div class="modal-body">
-                                            {{producto.nombre}}
-                                        </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        
-                                            <form action="{% url 'product_delete' producto.codigo %}" method="POST">
-                                            {% csrf_token %}
-                                                <button class="btn btn-primary">Eliminar</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    </div>  
-                                </div>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-sm btn-primary float-start" data-bs-toggle="modal" data-bs-target="#{{producto.codigo}}">
-                                    Eliminar
-                                </button>
-                        </th>
-                    </tr>
-                {% endfor %}
-            </tbody>
-            </table>
-        </div>
-    </div>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-sm btn-primary float-start" data-bs-toggle="modal" data-bs-target="#{{producto.codigo}}">
+                                            Eliminar
+                                        </button>
+                                </th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
 
 
 
+{% else %}
 
-</main>
+{% load crispy_forms_tags %}
+<section id="homeSection" style="width: 1250px;height: 1080px;padding: 40px;background-repeat: no- 
+   repeat;background-position: top center;background-size: cover;">
+        <main class="container">
+            <div class="row">
+                <div class="clo-md-5 offset-md-5">
+                    <!--h2>Log In</h2-->
+                    <form action="{% url 'login' %}" method="GET">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button class="btn-lg btn-primary" type="submit">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </main>
 
-
-
-
+</section>
 
 {% endif %}
-
-
-
 {% endblock %}
