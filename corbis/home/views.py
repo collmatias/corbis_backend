@@ -6,10 +6,13 @@ from django.urls import reverse
 
 from .models import Tipos_productos, Producto
 from .forms import ProductoCreationForm
-from .tables import ProductoTable
+from .tables import ProductoTable, ProductoTableView
+
 
 #from django.views.generic import ListView
 from django_tables2 import SingleTableView
+from django_tables2.config import RequestConfig
+from django_tables2.export.export import TableExport
 
 # Create your views here.
 
@@ -50,3 +53,17 @@ def products(request):
     prod = list(Producto.objects.values())
     return render(request, 'core/products.html', {'product_list':prod})
     #return render(request, 'core/products.html') """
+
+def table_view(request):
+    table = ProductoTableView(Producto.objects.all())
+
+    RequestConfig(request).configure(table)
+
+    export_format = request.GET.get("_export", None)
+    if TableExport.is_valid_format(export_format):
+        exporter = TableExport(export_format, table)
+        return exporter.response("table.{}".format(export_format))
+
+    return render(request, "table.html", {
+        "table": table
+    })
