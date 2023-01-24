@@ -20,12 +20,6 @@ from django_tables2.export.export import TableExport
 
 # Create your views here.
 
-#@login_required
-#def home(request):
-#    return render(request,'base.html')
-
-
-#class ProductoListView(ListView):
 class ProductoListView(SingleTableView):
     model = Producto
     table_class = ProductoTable
