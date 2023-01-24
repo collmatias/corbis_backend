@@ -25,7 +25,7 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
-    def get_string_fields(self):
+    """     def get_string_fields(self):
         # list of some excluded fields
         excluded_fields = ['producto_id', 'id']
 
@@ -40,4 +40,4 @@ class Producto(models.Model):
             values.append('%s' % getattr(self, field_name))
 
         # joining all string values.
-        return ' | '.join(values)
+        return ' | '.join(values) """

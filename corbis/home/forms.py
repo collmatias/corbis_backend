@@ -9,7 +9,7 @@ class CustomUserCreationForm(UserCreationForm):
 		model = User
 		fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
-class ProductCreationForm(forms.ModelForm):
+class ProductoCreationForm(forms.ModelForm):
 	
 	class Meta:
 		model = Producto
