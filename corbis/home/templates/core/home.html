@@ -26,6 +26,7 @@
                         <th scope="col">Precio</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
             <tbody>
@@ -42,15 +43,13 @@
                         <td>{{producto.nombre}}</td>
                         <td>{{producto.precio}}</td>
                         <td>{{producto.cantidad}}</td>
-                        <td>
-                            <form action="{% url 'product_delete' producto.nombre %}" method="POST">
-                                {% csrf_token %}
+                        <th>
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="{{producto.codigo}}" tabindex="-1" aria-labelledby="{{producto.codigo}}Label" aria-hidden="true">
                                     <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Desea eliminar el producto?</h5>
+                                        <h5 class="modal-title" id="{{producto.codigo}}Label">Desea eliminar el producto?</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -58,22 +57,20 @@
                                         </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <!--button type="button" class="btn btn-primary">Eliminar</button-->
-                                        <button type="button" class="btn btn-primary">Eliminar</button>
+                                        
+                                            <form action="{% url 'product_delete' producto.nombre %}" method="POST">
+                                            {% csrf_token %}
+                                                <button class="btn btn-primary">Eliminar</button>
+                                            </form>
                                         </div>
                                     </div>
-                                    </div>
+                                    </div>  
                                 </div>
-                                <!-- Button trigger normal -->
-                                <!--button class="btn btn-sm btn-primary float-start">Eliminar</button-->
-
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-sm btn-primary float-start" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-sm btn-primary float-start" data-bs-toggle="modal" data-bs-target="#{{producto.codigo}}">
                                     Eliminar
                                 </button>
-                          </form>
-                        </td>
-                        <!--th scope="row"><a href="{% url 'product_delete' producto.nombre %}">Eliminar</th>-->
+                        </th>
                     </tr>
                 {% endfor %}
             </tbody>
