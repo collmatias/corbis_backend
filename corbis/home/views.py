@@ -64,8 +64,6 @@ def product_details(request, buscar_producto):
         return render(request, 'core/product_detail.html', { 'producto' : prod, 'form' : form })
 
     else:
-        #request.method == 'POST':
-        product_creation_form = ProductoCreationForm(data=request.POST)
         form = ProductoCreationForm(request.POST, instance=prod)
 
         if form.is_valid():
@@ -74,9 +72,28 @@ def product_details(request, buscar_producto):
         else:
             return redirect(reverse('create_product')+'?error')
 
-    return render(request, 'core/create_product.html', {'form':product_creation_form})
 
+@login_required
+def product_delete(request, buscar_producto):
+    prod = get_object_or_404(Producto, nombre=buscar_producto)
+    if request.method == 'POST':
+        prod.delete()
+        return redirect('home')
     
+    """prod = get_object_or_404(Producto, nombre=buscar_producto)
+
+    if request.method == 'POST':
+        form = ProductoCreationForm(instance=prod)
+        return render(request, 'core/product_detail.html', { 'producto' : prod, 'form' : form })
+
+    else:
+        form = ProductoCreationForm(request.POST, instance=prod)
+
+        if form.is_valid():
+            prod.delete()
+            return redirect(reverse('create_product')+'?ok')
+        else:
+            return redirect(reverse('create_product')+'?error')"""
 
 
 def table_view(request):

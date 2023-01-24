@@ -6,7 +6,7 @@
 
 {% load crispy_forms_tags %}
 
-<h3>EDICION DE PRODUCTO</h3>
+<h3>ELIMINAR PRODUCTO</h3>
 
 <br>
 
@@ -17,15 +17,8 @@
               <div class="card-body">
                 <h5 class="card-title">Complete todos los campos</h5>
                 {{ form | crispy }}
-
-                <form action="{% url 'product_delete' producto.nombre %}" method="POST">
-                  {% csrf_token %}
-                    <button class="btn btn-sm btn-primary float-start">Eliminar Producto</button>
-                </form>
-
                 <input class="btn btn-sm btn-primary float-end" type="submit" value="Actualizar Producto" {% if 'ok' in request.GET %}disabled{% endif %}
                 {% if 'error' in request.GET %}disabled{% endif %}>
-
                 <!--button class="btn btn-sm btn-primary float-end" type="submit">Guardar Producto</button-->
               </div>
             </div>
@@ -33,13 +26,13 @@
 
       {% if 'ok' in request.GET %}
         <div class="alert alert-success mt-5" role="alert">
-          <strong>El producto se ha cargado correctamente</strong>
+          <strong>El producto se ha eliminado correctamente</strong>
         </div>
       {% endif %}
 
       {% if 'error' in request.GET %}
           <div class="alert alert-danger mt-5" role="alert">
-            <strong>Error al cargar el producto</strong>
+            <strong>Error al eliminado el producto</strong>
           </div>
       {% endif %}
 

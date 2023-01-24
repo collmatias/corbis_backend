@@ -6,16 +6,53 @@
 {% if request.user.is_authenticated %}
     <hr>
 
-<ul>
-    {% for producto in product_list %}
-        <li>
-            <a href="{% url 'product_details' producto.nombre %}">
-                <strong>producto.nombre</strong>
-            <p>{{producto.codigo}}</p>
-            <p>{{producto.precio}}</p>
-        </li>
-    {% endfor %}
-</ul>
+
+
+<main class="container">
+    <div class="row">
+        <div class="clo-md-1 offset-md-1">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            <tbody>
+                {% for producto in product_list %}
+                    <tr>
+                        <!--th scope="row"><a href="{% url 'product_details' producto.nombre %}">Editar</th-->
+                        <th>
+                            <form action="{% url 'product_details' producto.nombre %}" method="GET">
+                                {% csrf_token %}
+                                <button class="btn btn-sm btn-primary float-start">Editar</button>
+                          </form>
+                        </th>
+                        <td>{{producto.codigo}}</td>>
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.precio}}</td>
+                        <td>{{producto.cantidad}}</td>
+                        <td>
+                            <form action="{% url 'product_delete' producto.nombre %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-sm btn-primary float-start">Eliminar</button>
+                          </form>
+                        </td>
+                        <!--th scope="row"><a href="{% url 'product_delete' producto.nombre %}">Eliminar</th>-->
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+
 
 
 
