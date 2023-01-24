@@ -21,4 +21,6 @@ COPY ./corbis /corbis
 RUN apk update \
     && apk add --no-cache gcc musl-dev postgresql-dev python3-dev libffi-dev \
     && pip install --upgrade pip \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt \
+    && python manage.py makemigrations \
+    && python manage.py migrate 

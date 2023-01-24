@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home',
+    'django_tables2',
+    'home'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

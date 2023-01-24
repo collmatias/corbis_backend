@@ -15,11 +15,14 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from .views import home, products
-from django.contrib import admin
+from .views import home, create_product #, register, products
+from .views import ProductoListView
 
 urlpatterns = [
     path('', home, name='home'),
-    path('products/', products, name='products'),
+    #path('products/', products, name='products'),
+    path("products/", ProductoListView.as_view(), name='products'),
+    path('create_product/', create_product, name='create_product'),
+    #path('register/', register, name='register'),
 
 ]
