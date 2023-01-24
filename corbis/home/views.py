@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
+
 
 from .models import Tipos_productos, Producto
 from .forms import ProductoCreationForm
@@ -48,11 +49,35 @@ def create_product(request):
         return render(request, 'core/create_product.html', {'form':product_creation_form})
 
 
-""" @login_required
+@login_required
 def products(request):
     prod = list(Producto.objects.values())
-    return render(request, 'core/products.html', {'product_list':prod})
-    #return render(request, 'core/products.html') """
+    return render(request, 'core/home.html', {'product_list' : prod} )
+    #return render(request, 'core/products.html') """ 
+
+@login_required
+def product_details(request, buscar_producto):
+    prod = get_object_or_404(Producto, nombre=buscar_producto)
+
+    if request.method == 'GET':
+        form = ProductoCreationForm(instance=prod)
+        return render(request, 'core/product_detail.html', { 'producto' : prod, 'form' : form })
+
+    else:
+        #request.method == 'POST':
+        product_creation_form = ProductoCreationForm(data=request.POST)
+        form = ProductoCreationForm(request.POST, instance=prod)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('create_product')+'?ok')
+        else:
+            return redirect(reverse('create_product')+'?error')
+
+    return render(request, 'core/create_product.html', {'form':product_creation_form})
+
+    
+
 
 def table_view(request):
     table = ProductoTableView(Producto.objects.all())

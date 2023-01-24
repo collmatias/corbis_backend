@@ -7,7 +7,7 @@ class Tipos_productos(models.Model):
     codigo = models.CharField(max_length=50, unique=True, verbose_name='Codigo del tipo de producto')
     tipo_nombre = models.CharField(max_length=100, verbose_name='Tipo de producto')
     fecha_registro = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de carga del registro')
-    fecha_update = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de actualizacion')
+    fecha_update = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualizacion')
 
     def __str__(self):
         return self.tipo_nombre
@@ -20,7 +20,7 @@ class Producto(models.Model):
     precio = models.FloatField(default=0, verbose_name='Precio del producto')
     cantidad = models.IntegerField(default=0, verbose_name='Cantidad en Stock')
     fecha_registro = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de carga del registro')
-    fecha_update = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de actualizacion')
+    fecha_update = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualizacion')
 
     def __str__(self):
         return self.nombre

@@ -6,7 +6,16 @@
 {% if request.user.is_authenticated %}
     <hr>
 
-
+<ul>
+    {% for producto in product_list %}
+        <li>
+            <a href="{% url 'product_details' producto.nombre %}">
+                <strong>producto.nombre</strong>
+            <p>{{producto.codigo}}</p>
+            <p>{{producto.precio}}</p>
+        </li>
+    {% endfor %}
+</ul>
 
 
 
