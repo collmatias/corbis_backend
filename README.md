@@ -30,9 +30,14 @@ DATABASES = {
     ALLOWED_HOSTS = ['*']
 
 7. Start your container:
+    $ docker-compose build
     $ docker-compose up
 
-8. Test database:
+8. Run:
+    docker-compose exec corbis pip install requirements.txt
+
+9. Test database:
+    $ docker-compose run corbis python manage.py makemigrations
     $ docker-compose run corbis python manage.py migrate
 
 From now onwards you will run django commands after docker-compose run corbis [cmd] or docker-compose exec corbis [cmd]
