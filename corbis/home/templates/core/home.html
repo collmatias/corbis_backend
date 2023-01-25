@@ -66,14 +66,14 @@
                                                 
                                                     <form action="{% url 'product_delete' producto.codigo %}" method="POST">
                                                     {% csrf_token %}
-                                                        <button class="btn btn-primary">Eliminar</button>
+                                                        <button class="btn btn-danger btn-primary">Eliminar</button>
                                                     </form>
                                                 </div>
                                             </div>
                                             </div>  
                                         </div>
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-sm btn-primary float-start" data-bs-toggle="modal" data-bs-target="#{{producto.codigo}}">
+                                        <button type="button" class="btn btn-danger btn-primary float-start" data-bs-toggle="modal" data-bs-target="#{{producto.codigo}}">
                                             Eliminar
                                         </button>
                                 </th>
