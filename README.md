@@ -34,7 +34,7 @@ DATABASES = {
     $ docker-compose up
 
 8. Run:
-    docker-compose exec corbis pip install requirements.txt
+    docker-compose exec corbis pip install -r requirements.txt
 
 9. Test database:
     $ docker-compose run corbis python manage.py makemigrations
